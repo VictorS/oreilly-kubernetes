@@ -54,15 +54,19 @@ spec:
           serviceName: wordpress
           servicePort: 80
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
   namespace: wordpress
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
   template:
     metadata:
+      name: mysql
       labels:
         app: mysql
     spec:
@@ -75,15 +79,19 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           value: root
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
   namespace: wordpress
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
   template:
     metadata:
+      name: wordpress
       labels:
         app: wordpress
     spec:
@@ -95,3 +103,5 @@ spec:
         env:
         - name: WORDPRESS_DB_PASSWORD
           value: root
+        - name: WORDPRESS_DB_HOST
+          value: mysql

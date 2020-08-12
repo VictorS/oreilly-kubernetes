@@ -1,7 +1,0 @@
-commonLabels:
-  oreilly: kustomize
-ImageTags:
-  - name: nginx
-    newTag: v1
-resources:
-  - pod.yaml
